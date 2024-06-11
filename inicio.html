@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIENVENIDA</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-icons.min.css">
+    
+<style>
+    img{
+        border-radius: 50%;
+    }
+
+    #user-info{
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 10px;
+    }
+</style>
+</head>
+<body class="text-center">
+    
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <img src="/img/IMG-20240610-WA0009.jpg" alt="Logo" width=70" height="70" class="d-inline-block align-text-top m-auto">
+            <span class="navbar-brand m-auto w-100 h1">ASTROBERRY BANK</span>
+        </div>
+        <span id="user-info"></span>
+      </nav><br><br>
+      
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userInfo = document.getElementById('user-info');
+            const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+            if (usuarioActual) {
+                userInfo.textContent = `${usuarioActual.nombre}`;
+            } else {
+                userInfo.textContent = 'No hay usuario actual registrado.';
+            }
+        });
+    </script>
+</body>
+</html>
