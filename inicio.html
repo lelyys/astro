@@ -13,23 +13,30 @@
     }
 
     #user-info{
-        color: white;
+        color: rgb(12, 52, 172);
         font-weight: bold;
         font-size: 20px;
         padding: 10px;
+    }
+    body{
+        background: rgb(225, 190, 206);
+background: radial-gradient(circle, rgb(235, 182, 207) 3%, rgb(244, 193, 193) 68%);
     }
 </style>
 </head>
 <body class="text-center">
     
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <nav class="navbar bg-light border-bottom border-body" data-bs-theme="light">
         <div class="container-fluid">
-            <img src="/img/IMG-20240610-WA0009.jpg" alt="Logo" width=70" height="70" class="d-inline-block align-text-top m-auto">
+            <img src="/img/IMG-20240610-WA0009.jpg" alt="Logo" width=75" height="75" class="d-inline-block align-text-top m-auto">
             <span class="navbar-brand m-auto w-100 h1">ASTROBERRY BANK</span>
         </div>
         <span id="user-info"></span>
       </nav><br><br>
-      
+      <button type="submit" class="btn btn-primary btn-block" style="background-color: rgb(57, 30, 84);">SALDOS</button>
+      <button type="submit" class="btn btn-primary btn-block"  style="background-color: rgb(57, 30, 84);">MOVIMIENTOS</button>
+      <button type="submit" class="btn btn-primary btn-block"  style="background-color: rgb(57, 30, 84);">TARJETA</button>
+      <button type="submit" class="btn btn-primary btn-block"  style="background-color: rgb(57, 30, 84);">DASHBOARD</button>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const userInfo = document.getElementById('user-info');
