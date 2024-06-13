@@ -3,19 +3,24 @@ var btnTar = document.getElementById("btnTar");
 var btnDash = document.getElementById("btnDash");
 
 var action = document.getElementById("action"); // DIV QUE CAMBIA DEPENDIENDO DE BOTÓN QUE PRESIONES
+var user="";
 
 // FUNCIONES PARA BOTÓN DE SALDO
 const mostrarSaldo = () => {
     const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
-
+    user=usuarioActual.username;
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
-
-    let saldoActual = saldoGuardado.reduce((total, item) => total + parseFloat(item.monto), 0);
+    let total=0;
+    saldoGuardado.forEach(item=>{ 
+        if(item.user==user){
+        total +=parseFloat(item.monto)
+        }
+    });
 
     let saldoT = `
         <h2>¡Hola, ${usuarioActual.nombre} ${usuarioActual.apellido}!</h2>
         <br>
-        <h3 id="saldo">Tu Saldo es de: $${saldoActual.toFixed(2)}</h3>
+        <h3 id="saldo">Tu Saldo es de: $${total.toFixed(2)}</h3>
         <br>
     `;
     action.innerHTML = saldoT;
@@ -35,7 +40,7 @@ const agregarSaldo = () => {
 
     let fechaHora = new Date().toLocaleString();
 
-    saldoActual.push({ monto: monto, fechaHora: fechaHora });
+    saldoActual.push({ monto: monto, fechaHora: fechaHora ,user:user,tipo: "Deposito"});
 
     localStorage.setItem("saldo", JSON.stringify(saldoActual));
 
@@ -52,11 +57,13 @@ const tablaSaldo = () => {
     </tr>`;
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
     saldoGuardado.forEach(item => {
+        if(item.user==user){
         tablaSaldo += `
     <tr>
     <td>$${item.monto.toFixed(2)}</td>
     <td>${item.fechaHora}</td>
     </tr>`;
+        }
     });
     tablaSaldo += `</table>`;
     action.innerHTML += tablaSaldo;
@@ -147,6 +154,7 @@ const historialT = () => {
     </tr>`;
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
     saldoGuardado.forEach(item => {
+        if(item.user==user){
         tablaH += `
     <tr>
     <td>${item.tipo || 'Ingreso'}</td>
@@ -154,6 +162,7 @@ const historialT = () => {
     <td>$${item.monto.toFixed(2)}</td>
     <td>${item.fechaHora}</td>
     </tr>`;
+        }
     });
     tablaH += `</table>`;
     action.innerHTML = tablaH;
@@ -180,7 +189,7 @@ const retirarSaldo = () => {
     let nuevoSaldo = saldoDisponible - monto;
     let fechaHora = new Date().toLocaleString();
 
-    saldoActual.push({ monto: -monto, fechaHora: fechaHora, tipo: "Retiro" });
+    saldoActual.push({ monto: -monto, fechaHora: fechaHora, user:user,tipo: "Retiro" });
 
     localStorage.setItem("saldo", JSON.stringify(saldoActual));
 
