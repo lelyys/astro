@@ -42,7 +42,7 @@ const loginForm = document.querySelector('#loginForm');
             const users = JSON.parse(localStorage.getItem('usuarios')) || [];
             const validUser = users.find(user => user.username === email && user.password === password);
             if (!validUser) {
-                return alert('Usuario y/o contraseña incorrectos!');
+                return Swal.fire("ERROR","¡Usuario y/o contraseña incorrectos!","error");
             }
 
             localStorage.setItem('usuarioActual', JSON.stringify(validUser));

@@ -13,36 +13,54 @@
     }
 
     #user-info{
-        color: rgb(12, 52, 172);
+        color: rgb(91, 25, 117);
         font-weight: bold;
         font-size: 20px;
         padding: 10px;
     }
     body{
         background: rgb(225, 190, 206);
-background: radial-gradient(circle, rgb(235, 182, 207) 3%, rgb(244, 193, 193) 68%);
+        background: radial-gradient(circle, rgb(235, 182, 207) 3%, rgb(244, 193, 193) 68%);
     }
+
+    #nav{
+        font-weight: bold;
+    }
+
+    .btn{
+        background-color: rgb(136, 37, 131);
+        border: 1px solid rgb(153, 51, 136);
+    }
+
+    .btn:hover{
+        background-color: rgb(121, 193, 221);
+        border: 1px solid rgb(8, 112, 172);
+        transform: scale(1.2);
+        transition: 1s ease all;
+    }
+
+
 </style>
 </head>
 <body class="text-center">
     
     <nav class="navbar bg-light border-bottom border-body" data-bs-theme="light">
         <div class="container-fluid">
-            <img src="/img/IMG-20240610-WA0009.jpg" alt="Logo" width=75" height="75" class="d-inline-block align-text-top m-auto">
-            <span class="navbar-brand m-auto w-100 h1">ASTROBERRY BANK</span>
+            <img src="/img/IMG-20240610-WA0009.jpg" alt="Logo" height="75" class="d-inline-block align-text-top m-auto">
+            <span class="navbar-brand m-auto w-100 h1" id="nav">ASTROBERRY BANK</span>
         </div>
         <span id="user-info"></span>
       </nav><br><br>
-      <button type="submit" class="btn btn-primary btn-block" style="background-color: rgb(57, 30, 84);">SALDOS</button>
-      <button type="submit" class="btn btn-primary btn-block"  style="background-color: rgb(57, 30, 84);">MOVIMIENTOS</button>
-      <button type="submit" class="btn btn-primary btn-block"  style="background-color: rgb(57, 30, 84);">TARJETA</button>
-      <button type="submit" class="btn btn-primary btn-block"  style="background-color: rgb(57, 30, 84);">DASHBOARD</button>
+      <button type="submit" class="btn btn-primary btn-block mx-2">SALDOS</button>
+      <button type="submit" class="btn btn-primary btn-block mx-2">MOVIMIENTOS</button>
+      <button type="submit" class="btn btn-primary btn-block mx-2">TARJETA</button>
+      <button type="submit" class="btn btn-primary btn-block mx-2">DASHBOARD</button>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const userInfo = document.getElementById('user-info');
             const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
             if (usuarioActual) {
-                userInfo.textContent = `${usuarioActual.nombre}`;
+                userInfo.textContent = `¡Hola, ${usuarioActual.nombre}!`;
             } else {
                 userInfo.textContent = 'No hay usuario actual registrado.';
             }
