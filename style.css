@@ -97,7 +97,7 @@
     height: 50px;
     border-radius: 5px;
     background: #76d0d0;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: inherit;
     font-weight: bolder;
     border: none;
@@ -124,12 +124,12 @@
   
   #username{
     background: #f2d1e4;
-    color: silver;
+    color: rgb(7, 0, 0);
   }
   
   input[type="password"] {
     background: #f2d1e4;
-    color: silver;
+    color: rgb(7, 0, 0);
   }
   
   /*  input end */
