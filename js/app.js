@@ -47,4 +47,4 @@ const loginForm = document.querySelector('#loginForm');
 
             localStorage.setItem('usuarioActual', JSON.stringify(validUser));
             window.location.href ='inicio.html';
-        });
+});
