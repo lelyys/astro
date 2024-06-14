@@ -124,26 +124,58 @@
   </div>
 
 
-  <div class="modal fade" id="addSaldo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!--MODAL PARA RETIRO DE DINERO-->
+
+  <div class="modal fade" id="addRetiro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 w-100 m-auto" id="exampleModalLabel">AGREGAR SALDO</h1>
+          <h1 class="modal-title fs-5 w-100 m-auto" id="exampleModalLabel">REALIZAR RETIRO</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 
-          <label for="monto">INGRESE MONTO DE DINERO</label>
+          <label for="monto">INGRESE MONTO DE DINERO A RETIRAR</label>
           <input type="text" class="form-control w-100 m-auto text-center" id="monto">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
-          <button type="button" class="btn btn-success" onclick="agregarSaldo()">AGREGAR</button>
+          <button type="button" class="btn btn-success" onclick="retirarSaldo()">AGREGAR</button>
         </div>
       </div>
     </div>
   </div>
 
+
+  <!--MODAL PARA TRANSFERENCIA DE DINERO-->
+
+  <div class="modal fade" id="addTransferencia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 w-100 m-auto" id="exampleModalLabel">REALIZAR UNA TRANSFERENCIA</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <label for="">NOMBRE DE LA PERSONA</label>
+          <input type="text" class="form-control w-100 m-auto text-center" id="nombret"><br>
+
+          <label for="">NÚMERO DE CUENTA</label>
+          <input type="text" class="form-control w-100 m-auto text-center" id="notarjetat" maxlength="16"><br>
+
+          <label for="">MONTO A TRANSFERIR</label>
+          <input type="text" class="form-control w-100 m-auto text-center" id="montoT">
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+          <button type="button" class="btn btn-success" onclick="retirarSaldo()">AGREGAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
