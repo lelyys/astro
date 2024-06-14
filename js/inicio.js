@@ -1,18 +1,22 @@
-var btnSaldo=document.getElementById("btnSaldo");
-var btnMov=document.getElementById("btnMov");
-var btnTar=document.getElementById("btnTar");
-var btnDash=document.getElementById("btnDash");
+var btnMov = document.getElementById("btnMov");
+var btnTar = document.getElementById("btnTar");
+var btnDash = document.getElementById("btnDash");
 
-var saldo = JSON.parse(localStorage.getItem("saldo")) || [];
+var action = document.getElementById("action"); //DIV QUE CAMBIA DEPENDIENDO DE BOTÓN QUE PRESIONES
 
-var action=document.getElementById("action");
 
-// Función para mostrar el saldo en el área de acción
+//FUNCIONES PARA BOTÓN DE SALDO
 const mostrarSaldo = () => {
+    const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo"));
-    let saldoActual = saldoGuardado ? saldoGuardado.reduce((total, item) => total + parseFloat(item.monto), 0) : 0;
+
+    let saldoActual = saldoGuardado.reduce((total, item) => total + parseFloat(item.monto), 0);
+
     let saldoT = `
-        <h3 id="saldo">SALDO $${saldoActual.toFixed(2)}</h3>
+        <h2>¡Hola, ${usuarioActual.nombre} ${usuarioActual.apellido}!</h2>
+        <br>
+        <h3 id="saldo">Tu Saldo es de: $${saldoActual.toFixed(2)}</h3>
         <br>
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaldo">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
@@ -23,13 +27,12 @@ const mostrarSaldo = () => {
             </svg>
             Agregar Saldo
         </button>
+        <br>
+        <br>
     `;
     action.innerHTML = saldoT;
+    tablaSaldo();
 };
-
-btnSaldo.onclick = mostrarSaldo;
-
-
 
 const agregarSaldo = () => {
     let monto = parseFloat(document.getElementById("monto").value);
@@ -39,15 +42,52 @@ const agregarSaldo = () => {
         return;
     }
 
-    let saldoActual = JSON.parse(localStorage.getItem("saldo")) || 0;
-    let nuevoSaldo = saldoActual + monto;
+    let saldoActual = JSON.parse(localStorage.getItem("saldo")) || [];
+    let nuevoSaldo = saldoActual.reduce((total, item) => total + item.monto, 0) + monto;
 
-    localStorage.setItem("saldo", JSON.stringify(nuevoSaldo));
+    let fechaHora = new Date().toLocaleString();
+
+    saldoActual.push({ monto: monto, fechaHora: fechaHora });
+
+    localStorage.setItem("saldo", JSON.stringify(saldoActual));
 
     Swal.fire("¡SALDO AGREGADO!", `Se agregó un saldo de $${monto.toFixed(2)}.`, "success");
 
-    
-    mostrarSaldo(nuevoSaldo);
+    saldo.innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
+};
+
+const tablaSaldo = () => {
+    let tablaSaldo = `<table class="table table-striped w-75 m-auto">
+<tr>
+<td>SALDO INGRESADO</td>
+<td>FECHA Y HORA</td>
+</tr>`;
+    let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
+    saldoGuardado.forEach(item => {
+        tablaSaldo += `
+<tr>
+<td>$${item.monto.toFixed(2)}</td>
+<td>${item.fechaHora}</td>
+</tr>`;
+    });
+    tablaSaldo += `</table>`;
+    action.innerHTML += tablaSaldo;
 };
 
 
+
+//FUNCIONES PARA BOTÓN MOVIMIENTOS
+
+btnMov.onclick=()=>{
+    let saldoT = `
+    <h3>¿QUÉ MOVIMIENTO DESEAS HACER HOY?</h3>
+    <br>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRetiro">
+        Retiro
+    </button>
+    <br>
+    <br>
+`;
+action.innerHTML = saldoT;
+
+}

@@ -24,7 +24,7 @@ registrar.onclick = (event) => {
     return;
   }
 
-  let usuario = { nombre, apellido, username, password, tipo, tarjeta, notarjeta };
+  let usuario = {nombre, apellido, username, password, tipo, tarjeta, notarjeta};
 
   usuarios.push(usuario);
 

@@ -43,9 +43,6 @@
         transition: 1s ease all;
     }
 
-    #action{
-        height: 300px;
-    }
 
 </style>
 </head>
@@ -59,7 +56,7 @@
         <span id="user-info"></span>
       </nav><br>
 
-      <button type="submit" class="btn btn-primary btn-block mx-2" id="btnSaldo"> SALDO 
+      <button type="submit" class="btn btn-primary btn-block mx-2" onclick="mostrarSaldo()"> SALDO 
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
         <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
         <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
@@ -94,7 +91,7 @@
 
         <div class="card-body">
             <div id="action">
-                <img src="img/eslogan.png"  id="eslogan" width="300px">
+                <img src="img/eslogan.png"  id="eslogan" style="max-width: 100%; width:500px">
             </div>
         </div>
 
@@ -127,6 +124,26 @@
   </div>
 
 
+  <div class="modal fade" id="addSaldo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 w-100 m-auto" id="exampleModalLabel">AGREGAR SALDO</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <label for="monto">INGRESE MONTO DE DINERO</label>
+          <input type="text" class="form-control w-100 m-auto text-center" id="monto">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+          <button type="button" class="btn btn-success" onclick="agregarSaldo()">AGREGAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -147,7 +164,7 @@
         const userInfo = document.getElementById('user-info');
         const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
         if (usuarioActual) {
-            userInfo.textContent = `¡Hola, ${usuarioActual.nombre}!`;
+            userInfo.textContent = `${usuarioActual.nombre}`;
         } else {
             userInfo.textContent = 'No hay usuario actual registrado.';
         }
