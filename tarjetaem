@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarjeta Empresarial</title>
+<style>
+  .empresarial {
+    width: 300px;
+    height: 200px;
+    background-color: #0a098a;
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .chipem {
+    width: 50px;
+    height: 40px;
+    background: url('chip.jpeg') no-repeat ;
+    background-size: cover;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  .logoem {
+    width: 70px;
+    height: 60px;
+    background: url('visa.png') no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  .numero {
+    margin-top: 80px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  .nombre {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="empresarial">
+  <div class="chipem"></div>
+  <div class="logoem"></div>
+  <div class="numero"></div>
+  <div class="nombre"></div>
+  
+</div>
+
+</body>
+</html>
