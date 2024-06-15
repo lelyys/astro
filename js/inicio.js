@@ -56,8 +56,9 @@ const tablaSaldo = () => {
     <td>FECHA Y HORA</td>
     </tr>`;
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
-    saldoGuardado.forEach(item => {
+    saldoGuardado.reverse().forEach(item => {
         if(item.user==user){
+       
         tablaSaldo += `
     <tr>
     <td>$${item.monto.toFixed(2)}</td>
@@ -153,7 +154,7 @@ const historialT = () => {
     <td>FECHA Y HORA</td>
     </tr>`;
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
-    saldoGuardado.forEach(item => {
+    saldoGuardado.reverse().forEach(item => {
         if(item.user==user){
         tablaH += `
     <tr>

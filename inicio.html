@@ -202,7 +202,7 @@
         const userInfo = document.getElementById('user-info');
         const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
         if (usuarioActual) {
-            userInfo.textContent = `${usuarioActual.nombre}`;
+            userInfo.textContent = `${usuarioActual.nombre} ${usuarioActual.apellido} | Cuenta ${usuarioActual.tipo}`;
         } else {
             userInfo.textContent = 'No hay usuario actual registrado.';
         }
