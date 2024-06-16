@@ -72,6 +72,17 @@ registrar.onclick = (event) => {
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
     Swal.fire("¡REGISTRO EXITOSO!", "USUARIO REGISTRADO", "success");
+    
+    
+    username.style.boxShadow = "none";
+    password.style.boxShadow = "none";
+    document.getElementById("nombre").value="";
+    document.getElementById("apellido").value="";
+    document.getElementById("username").value="";
+    document.getElementById("password").value="";
+    document.getElementById("tipo").selectedIndex=0;
+    
+    document.getElementById("notarjeta").value="";
 };
 
 
