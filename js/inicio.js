@@ -24,7 +24,6 @@ const mostrarSaldo = () => {
         <br>
     `;
     action.innerHTML = saldoT;
-    tablaSaldo();
 };
 
 const agregarSaldo = () => {
@@ -333,3 +332,91 @@ const mostrarTarjeta = () => {
 };
 
 btnTar.onclick = mostrarTarjeta;
+
+
+
+
+const graficoSaldo = () => {
+
+    action.innerHTML = '';
+
+    const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+     user = usuarioActual.username;
+
+
+    let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
+
+
+    const ingresosPorDia = {};
+    const retirosPorDia = {};
+
+
+    saldoGuardado.forEach(item => {
+        if (item.user === user && (item.tipo === "Deposito" || item.tipo === "Retiro")) {
+            const fecha = item.fechaHora.slice(0, 10);
+            
+            if (!(fecha in ingresosPorDia)) {
+                ingresosPorDia[fecha] = 0;
+                retirosPorDia[fecha] = 0;
+            }
+            if (item.tipo === "Deposito") {
+                ingresosPorDia[fecha] += parseFloat(item.monto);
+            } else if (item.tipo === "Retiro") {
+                retirosPorDia[fecha] += parseFloat(item.monto);
+            }
+        }
+    });
+
+    const fechas = Object.keys(ingresosPorDia).sort();
+
+    let canvasIngresos = document.createElement('canvas');
+    canvasIngresos.id = 'canvasIngresos';
+    action.appendChild(canvasIngresos);
+
+
+    let ctxIngresos = canvasIngresos.getContext('2d');
+    let chartIngresos = new Chart(ctxIngresos, {type: 'bar', data: {
+       labels: fechas,
+            datasets: [{
+                label: 'Ingresos por Día',
+                data: fechas.map(fecha => ingresosPorDia[fecha]),
+                backgroundColor: '#44F59C', 
+                borderColor: 'green',
+                borderWidth: 1
+            }]
+        },
+     options: {scales: {y: {beginAtZero:true
+                }
+            }
+        }
+    });
+
+
+    let canvasRetiros = document.createElement('canvas');
+    canvasRetiros.id = 'canvasRetiros';
+    action.appendChild(canvasRetiros);
+
+    let ctxRetiros = canvasRetiros.getContext('2d');
+    let chartRetiros = new Chart(ctxRetiros, {
+        type: 'bar',
+        data: {
+            labels: fechas,
+            datasets: [{
+                label: 'Retiros por Día',
+                data: fechas.map(fecha => retirosPorDia[fecha]),
+                backgroundColor: '#F54444',
+                borderColor: 'red',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};
+
+btnDash.onclick = graficoSaldo;
