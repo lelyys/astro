@@ -1,39 +1,82 @@
-var registrar = document.getElementById("registrar");
-var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+const registrar = document.getElementById("registrar");
+const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+
+
+function validarUsuario(email) {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email.trim());
+}
+
+
+
+function validarPass(pass) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
+    return regex.test(pass.trim());
+}
+
+
+username.onkeydown = () => {
+    const email = username.value;
+    username.style.boxShadow = validarUsuario(email) ? "15px 0 30px lightgreen" : "15px 0 30px crimson";
+};
+
+
+password.oninput = () => {
+    const pass = password.value;
+    password.style.boxShadow = validarPass(pass) ? "15px 0 30px lightgreen" : "15px 0 30px crimson";
+};
+
+
 
 registrar.onclick = (event) => {
-  event.preventDefault(); 
+    event.preventDefault();
 
-  var nombre = document.getElementById("nombre").value;
-  var apellido = document.getElementById("apellido").value;
-  var username = document.getElementById("username").value; 
-  var password = document.getElementById("password").value; 
-
-  var tipo = document.getElementById("tipo").value;
-  var tarjeta = document.getElementById("tarjeta").value; 
-  var notarjeta = document.getElementById("notarjeta").value;
-
-  if (nombre.trim() === "" || apellido.trim() === "" || username.trim() === "" || password.trim() === "" || notarjeta.trim() === "") {
-    Swal.fire("ERROR","TIENES CAMPOS VACÍOS","error");
-    return;
-  }
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const usernameValue = username.value;
+    const passwordValue = password.value;
+    const tipo = document.getElementById("tipo").value;
+    const tarjeta = document.getElementById("tarjeta").value;
+    const notarjeta = document.getElementById("notarjeta").value;
 
 
-  if (validacion(usuarios, username, password, notarjeta)) {
-    Swal.fire("ERROR", "ESTE USUARIO, CONTRASEÑA O NÚMERO DE TARJETA YA EXISTE", "error");
-    return;
-  }
+    if (nombre.trim() === "" || apellido.trim() === "" || usernameValue.trim() === "" || passwordValue.trim() === "" || notarjeta.trim() === "") {
+        Swal.fire("ERROR", "TIENES CAMPOS VACÍOS", "error");
+        return;
+    }
 
-  let usuario = {nombre, apellido, username, password, tipo, tarjeta, notarjeta};
 
-  usuarios.push(usuario);
+    if (!validarUsuario(usernameValue)) {
+        Swal.fire("ERROR", "USUARIO NO VÁLIDO", "error");
+        return;
+    }
 
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    if (!validarPass(passwordValue)) {
+        Swal.fire("ERROR", "CONTRASEÑA NO VÁLIDA", "error");
+        return;
+    }
 
-  Swal.fire("¡REGISTRO EXITOSO!","USUARIO REGISTRADO","success");
-}
+
+
+    if (validacion(usuarios, usernameValue, passwordValue, notarjeta)) {
+        Swal.fire("ERROR", "ESTE USUARIO, CONTRASEÑA O NÚMERO DE TARJETA YA EXISTE", "error");
+        return;
+    }
+
+
+    const usuario = { nombre, apellido, username: usernameValue, password: passwordValue, tipo, tarjeta, notarjeta };
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+    Swal.fire("¡REGISTRO EXITOSO!", "USUARIO REGISTRADO", "success");
+};
+
+
 
 const validacion = (usuarios, username, password, notarjeta) => {
-  return usuarios.some(info => info.username === username || info.password === password || 
-    info.notarjeta === notarjeta);
-}
+    return usuarios.some(info => info.username === username || info.password === password || 
+        info.notarjeta === notarjeta);
+};
