@@ -28,11 +28,20 @@ const mostrarSaldo = () => {
 
 const agregarSaldo = () => {
     let monto = parseFloat(document.getElementById("monto").value);
+    
+    const usuarioActualString = localStorage.getItem('usuarioActual');
+    const usuarioActual = JSON.parse(usuarioActualString);
+    
+    const saldoString = localStorage.getItem('saldo');
+    const saldo = JSON.parse(saldoString);
+    
+    
 
     if (isNaN(monto) || monto <= 0) {
         Swal.fire("ERROR", "Ingrese un monto válido.", "error");
         return;
     }
+
 
     let saldoActual = JSON.parse(localStorage.getItem("saldo")) || [];
     let nuevoSaldo = saldoActual.reduce((total, item) => total + item.monto, 0) + monto;
@@ -211,6 +220,7 @@ const mostrarTarjeta = () => {
 
     let tarjetaHTML = `
         <div class="tarjeta">
+            <div class="ti">INFINITE EMPRESARIAL</div>
             <div class="chip"></div>
             <div class="logo"></div>
             <div class="numero">${usuarioActual.notarjeta}</div>
@@ -243,6 +253,14 @@ const mostrarTarjeta = () => {
                 align-items: center;
                 margin: auto; /* Para centrar horizontalmente */
             }
+            
+            .ti {
+            position: absolute;
+                top: 20px;
+                left: 180px;
+                font-size: 10px;
+            }
+            
 
             .chip {
                 width: 50px;
@@ -264,9 +282,14 @@ const mostrarTarjeta = () => {
             }
             .numero {
                 margin-top: 80px;
-                font-size: 24px;
+                font-size: 22px;
                 letter-spacing: 2px;
                 text-align: center;
+                font-family: "Aldrich", sans-serif;
+                font-weight: 600;
+                font-style: normal;
+}
+
             }
             .nombre {
                 margin-top: 20px;
@@ -295,6 +318,14 @@ const mostrarTarjeta = () => {
                 margin: auto;
             }
 
+               .ti {
+              position: absolute;
+                top: 20px;
+                left: 180px;
+                font-size: 10px;
+                color: transparent;
+            }
+
             .chip {
                 width: 50px;
                 height: 40px;
@@ -315,9 +346,14 @@ const mostrarTarjeta = () => {
             }
             .numero {
                 margin-top: 80px;
-                font-size: 24px;
+                font-size: 22px;
                 letter-spacing: 2px;
                 text-align: center;
+                font-family: "Aldrich", sans-serif;
+                font-weight: 600;
+                font-style: normal;
+                
+
         
            }
             .nombre {
@@ -420,3 +456,4 @@ const graficoSaldo = () => {
 };
 
 btnDash.onclick = graficoSaldo;
+        
