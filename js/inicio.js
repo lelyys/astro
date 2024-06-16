@@ -229,7 +229,8 @@ const mostrarTarjeta = () => {
             .tarjeta {
                 width: 300px;
                 height: 200px;
-                background-color: #0a098a;
+                background: rgb(5,3,58);
+                background: linear-gradient(45deg, rgba(19,18,45,1) 15%, rgba(16,39,107,1) 61%);
                 border-radius: 15px;
                 padding: 20px;
                 box-sizing: border-box;
@@ -243,11 +244,11 @@ const mostrarTarjeta = () => {
                 align-items: center;
                 margin: auto; /* Para centrar horizontalmente */
             }
-            /* Estilos específicos para los elementos de la tarjeta */
+
             .chip {
                 width: 50px;
                 height: 40px;
-                background: url('/img/chipem.jpeg') no-repeat ;
+                background: url('/img/chipem.png') no-repeat ;
                 background-size: cover;
                 position: absolute;
                 top: 20px;
@@ -279,7 +280,8 @@ const mostrarTarjeta = () => {
             .tarjeta {
                 width: 300px;
                 height: 200px;
-                background-color: #3498db;
+                background: rgb(149,220,233);
+                background: linear-gradient(45deg, rgba(149,220,233,1) 0%, rgba(0,130,187,1) 57%);
                 border-radius: 15px;
                 padding: 20px;
                 box-sizing: border-box;
@@ -291,13 +293,13 @@ const mostrarTarjeta = () => {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                margin: auto; /* Para centrar horizontalmente */
+                margin: auto;
             }
 
             .chip {
                 width: 50px;
                 height: 40px;
-                background: url('/img/chip.jpeg') no-repeat ;
+                background: url('/img/chip.png') no-repeat ;
                 background-size: cover;
                 position: absolute;
                 top: 20px;
