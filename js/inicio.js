@@ -198,3 +198,136 @@ const retirarSaldo = () => {
 
     document.getElementById("saldo").innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
 };
+
+
+
+//MOSTRAR TARJETA DIFERENTE
+
+var btnTar = document.getElementById("btnTar");
+var action = document.getElementById("action");
+
+const mostrarTarjeta = () => {
+    const usuarioActualString = localStorage.getItem('usuarioActual');
+    const usuarioActual = JSON.parse(usuarioActualString);
+
+    let tarjetaHTML = `
+        <div class="tarjeta">
+            <div class="chip"></div>
+            <div class="logo"></div>
+            <div class="numero">${usuarioActual.notarjeta}</div>
+            <div class="nombre">${usuarioActual.nombre} ${usuarioActual.apellido}</div>
+            <div class="fecha">12/26</div>
+        </div>
+    `;
+
+    action.innerHTML = tarjetaHTML;
+
+    let style = document.createElement('style');
+
+    if (usuarioActual.tipo === 'Empresarial') {
+        style.innerHTML = `
+            .tarjeta {
+                width: 300px;
+                height: 200px;
+                background-color: #0a098a;
+                border-radius: 15px;
+                padding: 20px;
+                box-sizing: border-box;
+                color: white;
+                font-family: Arial, sans-serif;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: auto; /* Para centrar horizontalmente */
+            }
+            /* Estilos específicos para los elementos de la tarjeta */
+            .chip {
+                width: 50px;
+                height: 40px;
+                background: url('/img/chipem.jpeg') no-repeat ;
+                background-size: cover;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+            .logo {
+                width: 70px;
+                height: 60px;
+                background: url('/img/visa.png') no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            .numero {
+                margin-top: 80px;
+                font-size: 24px;
+                letter-spacing: 2px;
+                text-align: center;
+            }
+            .nombre {
+                margin-top: 20px;
+                font-size: 16px;
+                text-align: center;
+            }
+        `;
+    } else if(usuarioActual.tipo === 'Basica') {
+        style.innerHTML = `
+            .tarjeta {
+                width: 300px;
+                height: 200px;
+                background-color: #3498db;
+                border-radius: 15px;
+                padding: 20px;
+                box-sizing: border-box;
+                color: white;
+                font-family: Arial, sans-serif;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: auto; /* Para centrar horizontalmente */
+            }
+
+            .chip {
+                width: 50px;
+                height: 40px;
+                background: url('/img/chip.jpeg') no-repeat ;
+                background-size: cover;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+            .logo {
+                width: 70px;
+                height: 60px;
+                background: url('/img/visa.png') no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            .numero {
+                margin-top: 80px;
+                font-size: 24px;
+                letter-spacing: 2px;
+                text-align: center;
+        
+           }
+            .nombre {
+                margin-top: 20px;
+                font-size: 16px;
+                text-align: center;
+            }
+        `;
+    }
+
+    document.head.appendChild(style);
+};
+
+btnTar.onclick = mostrarTarjeta;
