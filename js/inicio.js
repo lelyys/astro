@@ -3,17 +3,19 @@ var btnTar = document.getElementById("btnTar");
 var btnDash = document.getElementById("btnDash");
 
 var action = document.getElementById("action"); // DIV QUE CAMBIA DEPENDIENDO DE BOTÓN QUE PRESIONES
-var user="";
+var user = "";
+
+
 
 // FUNCIONES PARA BOTÓN DE SALDO
 const mostrarSaldo = () => {
     const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
-    user=usuarioActual.username;
+    user = usuarioActual.username;
     let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
-    let total=0;
-    saldoGuardado.forEach(item=>{ 
-        if(item.user==user){
-        total +=parseFloat(item.monto)
+    let total = 0;
+    saldoGuardado.forEach(item => {
+        if (item.user === user) {
+            total += parseFloat(item.monto);
         }
     });
 
@@ -27,56 +29,86 @@ const mostrarSaldo = () => {
 };
 
 const agregarSaldo = () => {
+    const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+    user = usuarioActual.username;
+
+    let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
+    let total = 0;
+    saldoGuardado.forEach(item => {
+        if (item.user === user) {
+            total += parseFloat(item.monto);
+        }
+    });
+
     let monto = parseFloat(document.getElementById("monto").value);
     
-    const usuarioActualString = localStorage.getItem('usuarioActual');
-    const usuarioActual = JSON.parse(usuarioActualString);
-    
-    const saldoString = localStorage.getItem('saldo');
-    const saldo = JSON.parse(saldoString);
-    
-    
-
     if (isNaN(monto) || monto <= 0) {
         Swal.fire("ERROR", "Ingrese un monto válido.", "error");
         return;
     }
 
+    if (usuarioActual.tipo === "Basica" && (total + monto) >= 50000) {
+        Swal.fire("ERROR", "Las cuentas básicas no pueden tener un saldo mayor o igual a $50,000.", "warning");
+        return;
+    }
 
-    let saldoActual = JSON.parse(localStorage.getItem("saldo")) || [];
-    let nuevoSaldo = saldoActual.reduce((total, item) => total + item.monto, 0) + monto;
+    if (usuarioActual.tipo === "Basica" && monto >= 20000) {
+        Swal.fire("ERROR", "Las cuentas básicas no pueden depositar monto mayor o igual a $20,000.", "warning");
+        return;
+    }
 
+    let nuevoSaldo = total + monto;
     let fechaHora = new Date().toLocaleString();
 
-    saldoActual.push({ monto: monto, fechaHora: fechaHora ,user:user,tipo: "Deposito"});
+    saldoGuardado.push({ monto: monto, fechaHora: fechaHora, user: user, tipo: "Deposito" });
 
-    localStorage.setItem("saldo", JSON.stringify(saldoActual));
+    localStorage.setItem("saldo", JSON.stringify(saldoGuardado));
 
     Swal.fire("¡SALDO AGREGADO!", `Se agregó un saldo de $${monto.toFixed(2)}.`, "success");
 
     document.getElementById("saldo").innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
 };
 
-const tablaSaldo = () => {
-    let tablaSaldo = `<table class="table table-striped w-75 m-auto">
-    <tr>
-    <td>SALDO INGRESADO</td>
-    <td>FECHA Y HORA</td>
-    </tr>`;
-    let saldoGuardado = JSON.parse(localStorage.getItem("saldo")) || [];
-    saldoGuardado.reverse().forEach(item => {
-        if(item.user==user){
-       
-        tablaSaldo += `
-    <tr>
-    <td>$${item.monto.toFixed(2)}</td>
-    <td>${item.fechaHora}</td>
-    </tr>`;
-        }
-    });
-    tablaSaldo += `</table>`;
-    action.innerHTML += tablaSaldo;
+const retirarSaldo = () => {
+    const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+    user = usuarioActual.username;
+
+    let monto = parseFloat(document.getElementById("retirar").value);
+
+    if (isNaN(monto) || monto <= 0) {
+        Swal.fire("ERROR", "Ingrese un monto válido.", "error");
+        return;
+    }
+    
+    if (usuarioActual.tipo === "Basica" && monto >= 15000) {
+        Swal.fire("ERROR", "Las cuentas básicas no pueden retirar un monto mayor o igual a $15,000.", "warning");
+        return;
+    }
+
+    let saldoActual = JSON.parse(localStorage.getItem("saldo")) || [];
+    let saldoDisponible = saldoActual.reduce((total, item) => total + (item.user === user ? parseFloat(item.monto) : 0), 0);
+
+    if (monto > saldoDisponible) {
+        Swal.fire("ERROR", "Fondos insuficientes", "error");
+        return;
+    }
+
+    let nuevoSaldo = saldoDisponible - monto;
+    let fechaHora = new Date().toLocaleString();
+
+    saldoActual.push({ monto: -monto, fechaHora: fechaHora, user: user, tipo: "Retiro" });
+
+    localStorage.setItem("saldo", JSON.stringify(saldoActual));
+
+    Swal.fire("¡RETIRO EXITOSO!", `Se retiró un monto de $${monto.toFixed(2)}.`, "success");
+
+    document.getElementById("saldo").innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
 };
+
+
+
+
+
 
 // FUNCIONES PARA BOTÓN MOVIMIENTOS
 
@@ -177,35 +209,6 @@ const historialT = () => {
     action.innerHTML = tablaH;
 }
 
-// RETIRO
-
-const retirarSaldo = () => {
-    let monto = parseFloat(document.getElementById("retirar").value);
-
-    if (isNaN(monto) || monto <= 0) {
-        Swal.fire("ERROR", "Ingrese un monto válido.", "error");
-        return;
-    }
-
-    let saldoActual = JSON.parse(localStorage.getItem("saldo")) || [];
-    let saldoDisponible = saldoActual.reduce((total, item) => total + parseFloat(item.monto), 0);
-
-    if (monto > saldoDisponible) {
-        Swal.fire("ERROR", "Fondos insuficientes", "error");
-        return;
-    }
-
-    let nuevoSaldo = saldoDisponible - monto;
-    let fechaHora = new Date().toLocaleString();
-
-    saldoActual.push({ monto: -monto, fechaHora: fechaHora, user:user,tipo: "Retiro" });
-
-    localStorage.setItem("saldo", JSON.stringify(saldoActual));
-
-    Swal.fire("¡RETIRO EXITOSO!", `Se retiró un monto de $${monto.toFixed(2)}.`, "success");
-
-    document.getElementById("saldo").innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
-};
 
 
 
@@ -456,4 +459,3 @@ const graficoSaldo = () => {
 };
 
 btnDash.onclick = graficoSaldo;
-        
