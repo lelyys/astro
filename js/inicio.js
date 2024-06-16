@@ -65,9 +65,15 @@ const agregarSaldo = () => {
     localStorage.setItem("saldo", JSON.stringify(saldoGuardado));
 
     Swal.fire("¡SALDO AGREGADO!", `Se agregó un saldo de $${monto.toFixed(2)}.`, "success");
+    
+        
+        
+    document.getElementById("monto").value = "";
 
     document.getElementById("saldo").innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
 };
+
+
 
 const retirarSaldo = () => {
     const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
@@ -101,9 +107,16 @@ const retirarSaldo = () => {
     localStorage.setItem("saldo", JSON.stringify(saldoActual));
 
     Swal.fire("¡RETIRO EXITOSO!", `Se retiró un monto de $${monto.toFixed(2)}.`, "success");
+    
+    
+    
+    document.getElementById("retirar").value = "";
+    
+    
 
     document.getElementById("saldo").innerText = `Tu Saldo es de: $${nuevoSaldo.toFixed(2)}`;
 };
+
 
 
 
@@ -459,3 +472,4 @@ const graficoSaldo = () => {
 };
 
 btnDash.onclick = graficoSaldo;
+        
